@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.calc {
+  background-color: black;
+  padding: 16px;
+}
+
+.calc-screen {
+  background-color: aliceblue;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(5, 100px);
+}
+
+.calc-grid > button {
+  cursor: pointer;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
