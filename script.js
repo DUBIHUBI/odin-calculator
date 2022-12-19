@@ -34,3 +34,41 @@ function operate(operator, a, b) {
   }
   return answer;
 }
+
+const numButtons = document.querySelectorAll('.num-btn');
+const operatorButtons = document.querySelectorAll('.operator-btn');
+const equalButton = document.querySelector('.equal-btn');
+const currentOperandOutput = document.querySelector('.current-operand');
+let lastOperand = '';
+let currentOperand = 0;
+let operator = '';
+
+function updateCurrentOperand(e) {
+  let currentNumber = Number(e.target.textContent);
+  currentOperand = currentOperand * 10 + currentNumber;
+  currentOperandOutput.textContent = currentOperand;
+}
+
+function getOperator(e) {
+  if (lastOperand) solve();
+  operator = e.target.textContent;
+  lastOperand = currentOperand;
+  currentOperand = 0;
+}
+
+function solve() {
+  if (lastOperand === '') return;
+  currentOperand = operate(operator, lastOperand, currentOperand);
+  lastOperand = '';
+  currentOperandOutput.textContent = currentOperand;
+}
+
+numButtons.forEach((button) => {
+  button.addEventListener('click', updateCurrentOperand);
+});
+
+operatorButtons.forEach((button) => {
+  button.addEventListener('click', getOperator);
+});
+
+equalButton.addEventListener('click', solve);
