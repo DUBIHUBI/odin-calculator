@@ -42,15 +42,19 @@ const currentOperandOutput = document.querySelector('.current-operand');
 let lastOperand = '';
 let currentOperand = 0;
 let operator = '';
+let isLastActionOperand = false;
 
 function updateCurrentOperand(e) {
+  isLastActionOperand = true;
   let currentNumber = Number(e.target.textContent);
   currentOperand = currentOperand * 10 + currentNumber;
   currentOperandOutput.textContent = currentOperand;
 }
 
 function getOperator(e) {
+  if (!isLastActionOperand) return (operator = e.target.textContent);
   if (lastOperand) solve();
+  isLastActionOperand = false;
   operator = e.target.textContent;
   lastOperand = currentOperand;
   currentOperand = 0;
