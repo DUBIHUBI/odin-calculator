@@ -72,7 +72,9 @@ numButtons.forEach((button) => {
 });
 
 operatorButtons.forEach((button) => {
-  button.addEventListener('click', getOperator);
+  button.addEventListener('click', (e) => {
+    getOperator(e);
+  });
 });
 
 equalButton.addEventListener('click', solve);
