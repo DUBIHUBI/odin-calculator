@@ -49,6 +49,11 @@ button.operator-btn {
   background-color: #ff9800;
 }
 
+button.active {
+  background-color: white;
+  color: #ff9800;
+}
+
 .span-2 {
   grid-column: span 2;
 }

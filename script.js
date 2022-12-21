@@ -42,6 +42,7 @@ const currentOperandOutput = document.querySelector('.current-operand');
 let lastOperand = '';
 let currentOperand = 0;
 let operator = '';
+let activeElement;
 let isLastActionOperand = false;
 
 function updateCurrentOperand(e) {
@@ -49,6 +50,7 @@ function updateCurrentOperand(e) {
   let currentNumber = Number(e.target.textContent);
   currentOperand = currentOperand * 10 + currentNumber;
   currentOperandOutput.textContent = currentOperand;
+  if (activeElement) activeElement.classList.remove('active');
 }
 
 function getOperator(e) {
@@ -60,8 +62,19 @@ function getOperator(e) {
   currentOperand = 0;
 }
 
+function switchActiveElement(e) {
+  if (!activeElement) activeElement = e.target;
+  if (activeElement !== e.target) {
+    activeElement.classList.remove('active');
+    activeElement = e.target;
+    activeElement.classList.add('active');
+  } else {
+    activeElement.classList.add('active');
+  }
+}
+
 function solve() {
-  if (lastOperand === '') return;
+  if (!isLastActionOperand || lastOperand === '') return;
   currentOperand = operate(operator, lastOperand, currentOperand);
   lastOperand = '';
   currentOperandOutput.textContent = currentOperand;
@@ -74,6 +87,7 @@ numButtons.forEach((button) => {
 operatorButtons.forEach((button) => {
   button.addEventListener('click', (e) => {
     getOperator(e);
+    switchActiveElement(e);
   });
 });
 
