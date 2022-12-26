@@ -39,11 +39,13 @@ const numButtons = document.querySelectorAll('.num-btn');
 const operatorButtons = document.querySelectorAll('.operator-btn');
 const equalButton = document.querySelector('.equal-btn');
 const currentOperandOutput = document.querySelector('.current-operand');
+const deleteButton = document.querySelector('.delete-btn');
+const allClearButton = document.querySelector('.all-clear-btn');
 let lastOperand = '';
 let currentOperand = 0;
 let operator = '';
 let activeElement;
-let isLastActionOperand = false;
+let isLastActionOperand = true;
 
 function updateCurrentOperand(e) {
   isLastActionOperand = true;
@@ -55,7 +57,7 @@ function updateCurrentOperand(e) {
 
 function getOperator(e) {
   if (!isLastActionOperand) return (operator = e.target.textContent);
-  if (lastOperand) solve();
+  if (lastOperand !== '') solve();
   isLastActionOperand = false;
   operator = e.target.textContent;
   lastOperand = currentOperand;
@@ -92,3 +94,23 @@ operatorButtons.forEach((button) => {
 });
 
 equalButton.addEventListener('click', solve);
+
+deleteButton.addEventListener('click', () => {
+  if (currentOperand === 0) return;
+  if (currentOperand > 0) {
+    currentOperand = Math.floor(currentOperand / 10);
+  } else {
+    currentOperand = Math.ceil(currentOperand / 10);
+  }
+  currentOperandOutput.textContent = currentOperand;
+});
+
+allClearButton.addEventListener('click', () => {
+  lastOperand = '';
+  currentOperand = 0;
+  operator = '';
+  if (activeElement) activeElement.classList.remove('active');
+  activeElement = null;
+  isLastActionOperand = true;
+  currentOperandOutput.textContent = currentOperand;
+});
